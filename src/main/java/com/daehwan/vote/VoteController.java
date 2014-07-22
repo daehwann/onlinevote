@@ -1,5 +1,7 @@
 package com.daehwan.vote;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +22,12 @@ public class VoteController {
 	
 	//투표용 URL
 	@RequestMapping("/vote")
-	public Opinion vote(HttpServletRequest request, @RequestParam(value="opinion", required=true) boolean opinion){
-		return new Vote().doVote(request.getRemoteAddr(), opinion);
+	public Opinion vote(HttpServletRequest request, @RequestParam(value="opinion", required=true) boolean opinion) throws UnknownHostException{
+		String ip = InetAddress.getLocalHost().getHostAddress();
+		System.out.println("host ip address : " + ip);
+		Opinion newOpinion = new Vote().doVote(request.getRemoteAddr(), opinion);
+		System.out.println("New Opinion : " + newOpinion.toString());
+		return newOpinion; 
 	}
 	
 }

@@ -23,6 +23,11 @@ public class Opinion {
 	}
 	
 	@Override
+	public String toString() {
+		return "Opinion [ip=" + ip + ", opinion=" + opinion + "]";
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		System.out.println("equals method is executed");
 		
