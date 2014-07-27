@@ -2,47 +2,40 @@ package com.daehwan.vote;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 public class Vote {
-
-	public static List<Opinion> opinionList = new ArrayList<Opinion>();
-	public static Set<String> ipSet = new HashSet<String>();
 	
-	public Opinion doVote(String ip, boolean opinion) {
-		Opinion o = new Opinion(ip, opinion);
-		
-		if(ipSet.add(o.getIp())){
-			opinionList.add(o);
-			System.out.println("Thank you for your vote!!");
-			return o;
-		}else {
-			System.out.println("You have already voted!!");
-			return o;
-		}
+	public List<Voter> voterList = new ArrayList<Voter>();
+	
+	public Set<String> keySet = new HashSet<String>();
+	
+	public List<Voter> getVoterList(){
+		return this.voterList;
 	}
 	
-	public static void main(String[] args) {
-		Opinion o1 = new Opinion("111.222.333.444", false);
-		if(ipSet.add(o1.getIp())){
-			opinionList.add(o1);
-			System.out.println("Thank you for your vote!!");
-		}else {
-			System.out.println("you have already voted!!");
-		}
+	public String doVote(Voter voter) {
+		String message = "";
 		
-		Opinion o2 = new Opinion("111.222.333.444", true);
-		if(ipSet.add(o2.getIp())){
-			opinionList.add(o2);
-			System.out.println("Thank you for your vote!!");
+		if(hasVoted(voter)){
+			message = "You have already voted!";
+			System.out.println("You have already voted!");
 		}else {
-			System.out.println("you have already voted!!");
+			voterList.add(voter);
+			message = "Thank you for you vote";
+			System.out.println("Thank you for you vote");
 		}
+		return message;
 		
-		for(Opinion o : opinionList) {
-			System.out.println(o.getIp());
+	}
+	
+	public boolean hasVoted(Voter voter) {
+		for(Voter v : voterList) {
+			if(v.getKey().equals(voter.getKey())) {
+				return true;
+			}
 		}
+		return false;
 	}
 }
