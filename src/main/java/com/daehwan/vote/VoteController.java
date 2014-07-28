@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VoteController {
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
+	private ApplicationContext context = new AnnotationConfigApplicationContext(VoteConfig.class);
 
 	@RequestMapping("/greeting2")
 	public Greeting greeting(
@@ -36,7 +37,6 @@ public class VoteController {
 		System.out.println("New Opinion : " + opinion);
 		Voter newVoter = new Voter(key, ip, opinion);
 		
-		ApplicationContext context = new AnnotationConfigApplicationContext(VoteConfig.class);
 		Vote vote = context.getBean(Vote.class);
 		System.out.println("vote hash : " + vote.toString());
 		for(Voter o : vote.voterList) {
